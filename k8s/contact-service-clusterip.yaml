@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: contact-service-clusterip
+  labels:
+    app: contact-service
+spec:
+  selector:
+    app: contact-service
+  ports:
+    - protocol: TCP
+      port: 8000
+      targetPort: 8000
+  type: ClusterIP

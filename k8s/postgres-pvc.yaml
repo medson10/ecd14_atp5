@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-pv-claim
+spec:
+  accessModes:
+    - ReadWriteOnce # O volume pode ser montado como leitura/escrita por um único nó.
+  resources:
+    requests:
+      storage: 1Gi # Solicita 1 Gigabyte de armazenamento.

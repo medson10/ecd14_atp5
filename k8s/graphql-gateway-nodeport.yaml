@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: graphql-gateway-nodeport
+  labels:
+    app: graphql-gateway
+spec:
+  selector:
+    app: graphql-gateway
+  ports:
+    - protocol: TCP
+      port: 9004 # Porta que o Service expõe internamente
+      targetPort: 9004 # Porta do container do Gateway
+      nodePort: 30004 # <-- Porta externa (escolha uma entre 30000-32767)
+  type: NodePort # Permite acesso de fora do cluster

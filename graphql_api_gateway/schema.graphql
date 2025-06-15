@@ -1,0 +1,73 @@
+interface Node {
+    id: ID!
+}
+
+enum ContactCategoryEnum {
+    FAMILY
+    BUSINESS
+    PERSONAL
+}
+
+enum PhoneNumberTypeEnum {
+    HOME
+    WORK
+    MOBILE
+}
+
+type PhoneNumberType {
+    number: String!
+    typeNumber: PhoneNumberTypeEnum!
+}
+
+input PhoneNumberInput {
+    number: String!
+    typeNumber: PhoneNumberTypeEnum!
+}
+
+type ContactType implements Node {
+    id: ID!
+    name: String!
+    category: ContactCategoryEnum!
+    phoneNumbers: [PhoneNumberType!]!
+}
+
+input CreateContactInput {
+    name: String!
+    category: ContactCategoryEnum!
+    phoneNumbers: [PhoneNumberInput!]!
+}
+
+input UpdateContactInput {
+    id: ID!
+    name: String
+    category: ContactCategoryEnum
+    phoneNumbers: [PhoneNumberInput!]
+}
+
+type ErrorType {
+    message: String!
+}
+
+union ContactUnion = ContactType | ErrorType
+
+type Query {
+    contacts: [ContactType!]!
+    contact(input: ContactQueryInput!): ContactUnion
+    node(id: ID!): Node
+}
+
+input ContactQueryInput {
+    contactId: ID!
+}
+
+union CreateContactPayload = ContactType | ErrorType
+
+type Mutation {
+    createContact(input: CreateContactInput!): CreateContactPayload!
+    updateContact(input: UpdateContactInput!): CreateContactPayload!
+    deleteContact(input: DeleteContactInput!): CreateContactPayload!
+}
+
+input DeleteContactInput {
+    id: ID!
+}

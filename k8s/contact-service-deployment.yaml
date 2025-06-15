@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: contact-service-deployment
+  labels:
+    app: contact-service
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: contact-service
+  template:
+    metadata:
+      labels:
+        app: contact-service
+    spec:
+      containers:
+        - name: contact-service
+          image: contact-service:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DATABASE_URL
+              value: postgresql://user:password@postgres-service:5432/mydatabase
